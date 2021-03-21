@@ -16,6 +16,8 @@ The idea behind using tensorflow is that with a fullly interconnected neural net
 >
 > ```install numpy``` https://numpy.org/install/
 >
+> ```install pycorenlp``` https://pypi.org/project/pycorenlp/
+>
 
 ### Setting up
 * Clone COSC310-Interactive-Conversational-Agent
@@ -24,6 +26,10 @@ The idea behind using tensorflow is that with a fullly interconnected neural net
 > ```import nltk```
 > 
 > ```nltk.download('punkt')```
+* Download the Stanford NLP Toolkit (CoreNLP) zip folder https://stanfordnlp.github.io/CoreNLP/
+* Extract the zip folder to anywhere on your PC
+* In the terminal, locate to the zip folder and enter:
+> ```java -mx4g -cp "*" edu.stanford.nlp.pipeline.StanfordCoreNLPServer -port 9000 -timeout 15000```
 
 ### Running
 * Compile and run chatbot.py
