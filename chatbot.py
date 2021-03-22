@@ -1,10 +1,9 @@
 #This file contains the acutall chat function of the bot and focuses on the input and ouput
 #If need be, chatbot calls load.py to load in all the data that it needs to run
-from load import load  #import load function from load.py
-import numpy           #numpy for use of numpy.argmax 
-import random          #random for grabbing a random response from the matching tag
-from pycorenlp import StanfordCoreNLP
-
+from load import load           #import load function from load.py
+from sentiment import sentiment #import sentiment function from sentiment.py
+import numpy                    #numpy for use of numpy.argmax 
+import random                   #random for grabbing a random response from the matching tag
 
 #load in the json file
 l = load("intents.json")
@@ -23,9 +22,10 @@ def chat():
         if inp.lower() == "quit":
             break
 
-        if(inp.lower().startswith("who") or inp.lower().startswith("what") or inp.lower().startswith("where") or
-        inp.lower().startswith("when") or inp.lower().startswith("why") or inp.lower().startswith("how") or
-        inp.lower().startswith("is") or inp.lower().startswith("do") or inp.lower().startswith("do")):
+        #instantiates sentiment object
+        s = sentiment(inp)
+        #determines if input is not a sentiment
+        if(s.isNotSentiment()):
             #results will hold the predicted value of the tags in corrispondence with the user's input    
             results = model.predict([l.bag_of_words(inp, words)])[0]
             #Grab the highest result and store it in results_index
@@ -47,30 +47,8 @@ def chat():
             else:
                 print("I didn't quite understand")
         else:
-            sentiment = sentiment_analysis(inp)
-            if sentiment >= 3:
-                print("Glad to hear you really like that.")
-            elif sentiment >= 2:
-                print("I fully agree.")
-            elif sentiment >= 1:
-                print("I can understand that.")
-            else:
-                print("Sorry to hear that.")
-
-def sentiment_analysis(sentence):
-    # The StanfordCoreNLP server is running on http://127.0.0.1:9000
-    nlp = StanfordCoreNLP('http://127.0.0.1:9000')
-            # Json response of all the annotations
-    output = nlp.annotate(sentence, properties={
-            "annotators": "tokenize,ssplit,parse,sentiment",
-            "outputFormat": "json",
-            # Only split the sentence at End Of Line. We assume that this method only takes in one single sentence.
-            "ssplit.eolonly": "true",
-            # Setting enforceRequirements to skip some annotators and make the process faster
-            "enforceRequirements": "false"
-            })
-    # Only care about the result of the first sentence because we assume we only annotate a single sentence 
-    return int(output['sentences'][0]['sentimentValue'])
+            sent = s.sentiment_analysis()
+            s.sentimentNumber(sent)
 
 #call chat function
 chat()
