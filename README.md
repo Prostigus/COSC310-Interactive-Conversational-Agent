@@ -21,6 +21,9 @@ We have also implemented some features to further enhance the user's experience 
 >
 > ```install pycorenlp``` https://pypi.org/project/pycorenlp/
 >
+> ```install googletrans``` https://pypi.org/project/googletrans/
+> 
+> ```install Wikipedia-API``` https://pypi.org/project/Wikipedia-API/
 
 ## **Setting up**
 * Clone the COSC310-Interactive-Conversational-Agent repository
@@ -37,6 +40,7 @@ We have also implemented some features to further enhance the user's experience 
 > For example, if your project folder is located at 
 > ```C:\Users\USER\COSC310-INTERACTIVE-CONVERSATIONAL-AGENT```, then extract file to ```C:\Users\USER\```
 
+>
 
 ## **Running**
 * Compile and run stanfordload.py
@@ -92,3 +96,10 @@ When the bot fails to recognize a sentence input by the user, it now has the pos
 The Lancaster Stemmer Algorithm tokenizes the words in the user's input sentence, stems them to provide the root words, removes 'stop words' and as a result, can handle minor spelling errors. The following image shows the bot's ability to respond appropriately even if the input sentence has minor errors in spelling:
 
 ![SPELL](/images/SPELL_sample.PNG)
+
+### Google Translate API
+ The translation of sentences is now integrated into the chatbot. We can begin by first changing the language to which we wish to translate to. To do so simply type `change language: ` followed by a language. By changing the language, the responses will also be translated.
+ 
+ 
+### Wikipedia API
+This API is also integrated directly into the chatbot, and has the feature of showing a summary of any asked Wikipedia article within 1000 characters. To use this, simply type `wiki: ` followed by which wiki you would like to see.
