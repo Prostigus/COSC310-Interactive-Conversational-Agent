@@ -32,7 +32,10 @@ def chat(user_inp, *args):
 
         d = googletrans.LANGUAGES
 
-        if("change language: " in tinp):            
+        if("change language: " in tinp):
+            if inp[17:] not in d.values():
+                return "Not a valid language"
+
             for k in d.keys():
                 if inp[17:] == d[k]:
                     lan = k            
@@ -80,8 +83,11 @@ def chat(user_inp, *args):
                         for t in data["intents"]:
                             if t['tag'] == tag:
                                 responses = t['responses']
-
-                        return random.choice(responses)
+                        if lan == "en":
+                            return random.choice(responses)
+                        translatedword = translator.translate(random.choice(responses),src="en",dest= lan)
+                        return translatedword.text
+                        #return random.choice(responses)
                 global others
                 others = ["I didn't quite understand", "I failed to understand what you were trying to say!", "Come again?", "Could you please repeat that for me?", "What language is that?"]
                 return random.choice(others)
